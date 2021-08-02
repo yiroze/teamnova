@@ -16,7 +16,7 @@ $file_name = basename(__FILE__);
             rel="stylesheet"
             integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
             crossorigin="anonymous">
-            <link rel="stylesheet" type="text/css" href="board_style.css">
+        <link rel="stylesheet" type="text/css" href="board_style.css">
         <title>duo.gg</title>
         <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
         <script type="text/javascript">
@@ -24,16 +24,19 @@ $file_name = basename(__FILE__);
                 $("#navbar").load("/firstapp/navbar.php"); //헤더 인클루드
             });
         </script>
-         <script type="text/javascript" src="moveURL.js"></script>
+        <script type="text/javascript" src="moveURL.js"></script>
     </head>
     <body>
         <!-- navbar -->
         <div id="navbar"></div>
         <div class="container">
             <div class="row">
+            <div class="page_name">미드 게시판</div>
+            </div>
+            <div class="row">
                 <div>
                     <div style="float:left;">
-                    <form action="position_board_mid.php" method="get" id="category">
+                        <form action="position_board_mid.php" method="get" id="category">
                             <select name="category" onchange="submit()">
                                 <option value="all">전체</option>
                                 <option value="질문">질문</option>
@@ -42,9 +45,8 @@ $file_name = basename(__FILE__);
                             </select>
                         </form>
                     </div>
-                    
                     <div style="float:right;">
-                    <?php
+                        <?php
                     if(isset($_SESSION['user_id'])){
                         ?>
                         <button
@@ -69,36 +71,46 @@ $file_name = basename(__FILE__);
                     }
                     ?>
                     </div>
-                    </div>
                 </div>
-                <div class="col">
-                    <table class="table table-striped" id="list">
-                        <thead>
-                            <tr>
-                                <th scope="col" class="td1" style="width : 8%"></th>
-                                <th scope="col" class="td1" style="width : 7%"></th>
-                                <th scope="col" class="td2" style="width : 50%">제목</th>
-                                <th scope="col" class="td3" style="width : 15%">유저</th>
-                                <th scope="col" class="td4" style="width : 10%">작성일</th>
-                                <th scope="col" class="td4" style="width : 10%"></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <?=$list?>
-                        </tbody>
-                    </table>
-                    <div class="text-center">
-                        <nav aria-label="Page navigation example">
-                            <ul class="pagination">
+            </div>
+            <div class="col">
+                <table class="table table-striped" id="list">
+                    <thead>
+                        <tr>
+                            <th scope="col" class="td1" style="width : 8%"></th>
+                            <th scope="col" class="td1" style="width : 7%"></th>
+                            <th scope="col" class="td2" style="width : 50%">제목</th>
+                            <th scope="col" class="td3" style="width : 15%">유저</th>
+                            <th scope="col" class="td4" style="width : 10%">작성일</th>
+                            <th scope="col" class="td4" style="width : 10%"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?=$list?>
+                    </tbody>
+                </table>
+                <div class="text-center">
+                    <nav aria-label="Page navigation example">
+                        <ul class="pagination">
                             <?php
                         include $_SERVER['DOCUMENT_ROOT']."/firstapp/api/page_api.php";
                         ?>
-                            </ul>
-                        </nav>
-                    </div>
+                        </ul>
+                    </nav>
+                </div>
+                <div>
+                    <form action="<?=$file_name?>" method="get">
+                        <select name="target">
+                            <option value="title">제목</option>
+                            <option value="user_name">작성자</option>
+                        </select>
+                        <input type="text" class="form-control" placeholder="검색" name="q">
+                        <button type="submit" class="btn btn-primary">검색</button>
+                    </form>
                 </div>
             </div>
-   
+        </div>
+
         <!-- Optional JavaScript; choose one of the two! -->
 
         <!-- Option 1: Bootstrap Bundle with Popper -->
@@ -106,7 +118,6 @@ $file_name = basename(__FILE__);
             src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
             integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
             crossorigin="anonymous"></script>
-          
 
         <!-- Option 2: Separate Popper and Bootstrap JS -->
         <!-- <script

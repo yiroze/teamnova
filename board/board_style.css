@@ -14,3 +14,8 @@ div.container {
 div.col {
     margin: 60px 0 0;
 }
+div.page_name{
+    font-weight: 500;
+    font-size: xx-large;
+    text-align: center;
+}

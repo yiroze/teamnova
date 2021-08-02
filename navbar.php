@@ -65,8 +65,8 @@
                 <button type="button" class="btn btn-primary " onclick="location.href='/firstapp/api/process_logout.php'">
                 logout
                 </button>
-                <button type="button" class="btn btn-primary" onclick="location.href='/firstapp/firstapp/mypage.php'">
-                my page
+                <button type="button" class="btn btn-primary" onclick="location.href='/firstapp/mypage.php'">
+                <?=$_SESSION['user_name']?>
                 </button>
                 <?php
             }

@@ -33,6 +33,9 @@ $file_name = basename(__FILE__);
 
         <div class="container">
             <div class="row">
+                  <div class="page_name">자유게시판</div>
+            </div>
+            <div class="row">
                 <div>
                     <div style="float:left;">
                         <form action="free.php" method="get" id="category">
@@ -105,6 +108,16 @@ $file_name = basename(__FILE__);
                         ?>
                     </ul>
                 </nav>
+            </div>
+            <div>
+                <form action="<?=$file_name?>" method="get">
+                <select name="target">
+                    <option value="title">제목</option>
+                    <option value="user_name">작성자</option>
+                </select>
+                <input type="text" class="form-control" placeholder="검색" name="q">
+                <button type="submit" class="btn btn-primary">검색</button>
+            </form>
             </div>
         </div>
 
