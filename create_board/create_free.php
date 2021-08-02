@@ -1,13 +1,5 @@
 <?php
-include '/firstapp/api/connectDB.php';
-    $list ="";
-    $sql = "SELECT*FROM user";
-    $result = mysqli_query($conn, $sql);
-    while ($row = mysqli_fetch_array($result)){
-        $user = $row['name'];
-        $id = $row['idx'];
-        $list = $list."<option value=\"$id\">$user</option>";
-    }
+session_start();
 ?>
 
 <!doctype html>
@@ -44,7 +36,7 @@ include '/firstapp/api/connectDB.php';
          <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
         <script type="text/javascript">
             $(document).ready(function () {
-                $("#navbar").load("navbar.php"); //헤더 인클루드
+                $("#navbar").load("/firstapp/navbar.php"); //헤더 인클루드
             });
         </script>
         
@@ -55,7 +47,9 @@ include '/firstapp/api/connectDB.php';
 
         <!-- 게시판 글쓰기 양식 영역 시작 -->
         <div class="container">
-            <form action="process_create.php" method="post">
+            <form action="/firstapp/api/process_create.php" method="post">
+                <input type="hidden" name="user_idx" value="<?=$_SESSION['user_idx']?>">
+                <input type="hidden" name="board_type" value="free">
                 <div class="row">
                     <div class="col">
                         게시판
@@ -72,9 +66,7 @@ include '/firstapp/api/connectDB.php';
                             </select>
                         </div>
                         <div class="col-1">
-                            <select name="user" id="user">
-                                <?= $list ?>
-                            </select>
+                            <div><?=$_SESSION['user_name']?></div>
                         </div>
                     </div>
 

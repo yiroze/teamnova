@@ -10,8 +10,8 @@ include 'connectDB.php';
 
 $email = $_POST['email'];
 $password = $_POST['password'];
- $check_sql ="SELECT * FROM user WHERE email='$email'";
- $check_result = mysqli_query($conn ,$check_sql);
+ $check_sql ="SELECT * FROM user WHERE email=$email";
+ $check_result = mysqli_query($conn,$check_sql);
 $exist =mysqli_num_rows($check_result);
 
 if($exist==0){
@@ -37,7 +37,7 @@ if($exist==0){
     } else {
        ?>
        <script type="text/Javascript">
-           alert(' 문제가 생겼습니다 관리자에게 문의해주세요');
+           alert('문제가 생겼습니다 관리자에게 문의해주세요');
            window.location.href = "/firstapp/join.php";
        </script>
        <?php

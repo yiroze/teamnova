@@ -1,0 +1,16 @@
+body {
+    background-color: cornflowerblue;
+}
+table {
+    background-color: white;
+}
+
+div.container {
+    background-color: white;
+    position: absolute;
+    top: 20%;
+    left: 15%;
+}
+div.col {
+    margin: 60px 0 0;
+}

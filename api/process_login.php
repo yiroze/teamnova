@@ -20,10 +20,10 @@ if ($exist==1){
         //패스워드 일치
         session_start();
         $name = $row['name'];
-        $num = $row['num'];
+        $idx = $row['idx'];
         $_SESSION['user_id'] = $email;
         $_SESSION['user_name'] = $name;
-        $_SESSION['user_num'] = $num;
+        $_SESSION['user_idx'] = $idx;
         ?>
 <script type="text/Javascript">
     alert('로그인 되었습니다<?=$_SESSION[' user_id ']?>');
@@ -61,4 +61,4 @@ else {
 }
 
 
-?>
+?> 

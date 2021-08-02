@@ -1,59 +1,8 @@
 <?php
-$conn = mysqli_connect(
-    'localhost',
-    'hojae',
-    'ghwo1353',
-    'duo.gg'
-);
-$list ='';
-$category=$_GET['category'];
-if($category == 'all'){
-    $sql = "SELECT*FROM table_free LEFT JOIN user ON table_free.user = user.num ORDER BY table_free.id DESC";
-    $result = mysqli_query($conn, $sql);
-    while( $row =mysqli_fetch_array($result)){
-        $list = $list."<tr onclick=\"moveURL({$row['id']})\" >
-        <th scope=\"row\">{$row['id']}</th>
-        <td>{$row['category']}</td>
-        <td>{$row['title']}</td>
-        <td>{$row['name']}</td>
-        <td>{$row['created']}</td>
-        <td>{$row['view_count']}</td>
-    </tr>";
-    }
-    
-}
-elseif($category == null){
-    $sql = "SELECT*FROM table_free LEFT JOIN user ON table_free.user = user.num ORDER BY table_free.id DESC";
-    $result = mysqli_query($conn, $sql);
-    while( $row =mysqli_fetch_array($result)){
-        $list = $list."<tr onclick=\"moveURL({$row['id']})\" >
-        <th scope=\"row\">{$row['id']}</th>
-        <td>{$row['category']}</td>
-        <td>{$row['title']}</td>
-        <td>{$row['name']}</td>
-        <td>{$row['created']}</td>
-        <td>{$row['view_count']}</td>
-    </tr>";
-    }
-    
-}
-else{
-    $sql ="SELECT*FROM table_free LEFT JOIN user ON table_free.user = user.num WHERE category='$category' ORDER BY table_free.id DESC";
-$result = mysqli_query($conn, $sql);
-while( $row =mysqli_fetch_array($result)){
-    $list = $list."<tr onclick=\"moveURL({$row['id']})\" >
-    <th scope=\"row\">{$row['id']}</th>
-    <td>{$row['category']}</td>
-    <td>{$row['title']}</td>
-    <td>{$row['name']}</td>
-    <td>{$row['created']}</td>
-    <td>{$row['view_count']}</td>
-</tr>";
-}
-
-}
+include $_SERVER['DOCUMENT_ROOT']."/firstapp/api/select_pos_top.php";
+session_start();
+$file_name = basename(__FILE__);
 ?>
-
 <!doctype html>
 <html lang="ko">
     <head>
@@ -67,61 +16,61 @@ while( $row =mysqli_fetch_array($result)){
             rel="stylesheet"
             integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
             crossorigin="anonymous">
-
+            <link rel="stylesheet" type="text/css" href="board_style.css">
         <title>duo.gg</title>
-        <style>
-            body {
-                background-color: cornflowerblue;
-            }
-            table {
-                background-color: white;
-            }
-            ul.pagination {
-                position: relative;
-                left: 45%;
-            }
-            div.container {
-                background-color: white;
-                position: absolute;
-                top: 20%;
-                left: 15%;
-            }
-            div.col {
-                margin: 60px 0 0;
-            }
-        </style>
- <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+        <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
         <script type="text/javascript">
             $(document).ready(function () {
-                $("#navbar").load("navbar.php"); //헤더 인클루드
+                $("#navbar").load("/firstapp/navbar.php"); //헤더 인클루드
             });
         </script>
+         <script type="text/javascript" src="moveURL.js"></script>
     </head>
     <body>
         <!-- navbar -->
         <div id="navbar"></div>
-
         <div class="container">
             <div class="row">
                 <div>
                     <div style="float:left;">
-                        <form action="free.php" method="get" id="category">
-                            <select name="category">
+                    <form action="position_board_top.php" method="get" id="category">
+                            <select name="category" onchange="submit()">
                                 <option value="all">전체</option>
                                 <option value="질문">질문</option>
                                 <option value="공략">공략</option>
                                 <option value="일반">일반</option>
                             </select>
-                            <input type="submit" value="확인">
                         </form>
                     </div>
                     <div style="float:right;">
+                        <?php echo $_GET['position'];?>유저 게시판
+                    </div>
+                    <div style="float:right;">
+                    <?php
+                    if(isset($_SESSION['user_id'])){
+                        ?>
                         <button
                             type="button"
                             style="width:100px; height:40px;"
-                            onclick="location.href='create_free.php'">
+                            class="btn btn-primary"
+                            onclick="location.href='/firstapp/create_board/create_position.php?position=top'">
                             글쓰기
                         </button>
+                    <?php
+                    }
+                    else{
+                        ?>
+                        <button
+                            type="button"
+                            style="width:100px; height:40px;"
+                            class="btn btn-primary"
+                            onclick="alert('회원만 게시가 가능합니다')">
+                            글쓰기
+                        </button>
+                        <?php
+                    }
+                    ?>
+                    </div>
                     </div>
                 </div>
                 <div class="col">
@@ -143,24 +92,15 @@ while( $row =mysqli_fetch_array($result)){
                     <div class="text-center">
                         <nav aria-label="Page navigation example">
                             <ul class="pagination">
-
-                                <li class="page-item">
-                                    <a class="page-link" href="free_top.php?page=1">1</a>
-                                </li>
-                                <li class="page-item">
-                                    <a class="page-link" href="free_top.php?page=2">2</a>
-                                </li>
-                                <li class="page-item">
-                                    <a class="page-link" href="free_top.php?page=3">3</a>
-                                </li>
-
+                            <?php
+                        include $_SERVER['DOCUMENT_ROOT']."/firstapp/api/page_api.php";
+                        ?>
                             </ul>
                         </nav>
                     </div>
                 </div>
             </div>
-        </div>
-
+ 
         <!-- Optional JavaScript; choose one of the two! -->
 
         <!-- Option 1: Bootstrap Bundle with Popper -->
@@ -168,11 +108,6 @@ while( $row =mysqli_fetch_array($result)){
             src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
             integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
             crossorigin="anonymous"></script>
-        <script>
-            function moveURL(param) {
-                location.href = "free_view.php?id=" + param;
-            }
-        </script>
 
         <!-- Option 2: Separate Popper and Bootstrap JS -->
         <!-- <script

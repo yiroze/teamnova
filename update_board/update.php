@@ -1,21 +1,5 @@
 <?php
-$conn = mysqli_connect(
-    'localhost',
-    'hojae',
-    'ghwo1353',
-    'duo.gg'
-);
-$id = $_GET['id'];
-$sql = "SELECT*FROM table_free LEFT JOIN user ON table_free.user = user.num WHERE table_free.id =$id";
-$result = mysqli_query($conn, $sql);
-$view =mysqli_fetch_array($result);
-$title = $view['title'];
-$content = $view['content'];
-$user = $view['user'];
-$created = $view['created'];
-$category = $view['category'];
-$view_count = $view['view_count'];
-$user_name = $view['name'];
+include $_SERVER['DOCUMENT_ROOT']."/firstapp/api/select_view_api.php";
 ?>
 <!doctype html>
 <html lang="ko">
@@ -51,7 +35,7 @@ $user_name = $view['name'];
         <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
         <script type="text/javascript">
             $(document).ready(function () {
-                $("#navbar").load("navbar.php"); //헤더 인클루드
+                $("#navbar").load("/firstapp/navbar.php"); //헤더 인클루드
             });
         </script>
     </head>
@@ -61,9 +45,11 @@ $user_name = $view['name'];
         
 
         <div class="container">
-            <form action="process_update.php" method="post">
+            <form action="/firstapp/api/process_update.php" method="post">
                 <input type="hidden" value="<?=$user_name?>" name="name">
-                <input type="hidden" value="<?=$_GET['id'];?>" name="id">
+                <input type="hidden" value="<?=$board_type?>" name="board_type">
+                <input type="hidden" value="<?=$position?>" name="position">
+                <input type="hidden" value="<?=$id?>" name="id">
                 <div class="row">
                     <div class="col">
                         자유게시판
@@ -101,7 +87,7 @@ $user_name = $view['name'];
                 </div>
                 <div class="row">
                     <div class="col">
-                        <button type="submit" class="btn btn-primary">글쓰기</button>
+                        <button type="submit" class="btn btn-primary">수정하기</button>
                     </div>
                 </form>
             </div>

@@ -1,12 +1,15 @@
 <?php
 include 'connectDB.php';
-if($_POST['board'] == "free"){
+session_start();
 
+//자유게시판 등록 시작
+if($_POST['board_type'] == "free"){
   $filtered = array(
+    'board_type' =>mysqli_real_escape_string($conn, $_POST['board_type']),
     'title' =>mysqli_real_escape_string($conn, $_POST['title']),
     'content' =>mysqli_real_escape_string($conn, $_POST['contents']),
     'category' =>mysqli_real_escape_string($conn, $_POST['category']),
-    'user_idx' =>mysqli_real_escape_string($conn, $_POST['user'])
+    'user_idx' =>mysqli_real_escape_string($conn, $_POST['user_idx'])
   );
 
 $sql = "
@@ -25,32 +28,31 @@ $sql = "
 
 $result = mysqli_query($conn, $sql);
 if($result === false){
-  ?><script>alert('ERROR');
-   window.location.href="free.php";</script>
+  ?><script>alert('저장과정중 문제가 생겼습니다');
+   window.location.href="/firstapp/board/free.php";</script>
   <?php
 } else {
     ?>
     <script type="text/Javascript">
     <!--
-      alert('OK');
-      window.location.href="free.php";
+      alert('게시되었습니다');
+      window.location.href="/firstapp/board/free.php";
     //-->
     </script>
 <?php
    exit;
 }
-} elseif($_POST['board'] == "position"){
-  $conn = mysqli_connect(
-    'localhost',
-    'hojae',
-    'ghwo1353',
-    'duo.gg');
+}
+//포지션 게시판 등록 시작 
+else if($_POST['board_type'] == "position"){
+ 
     $filtered = array(
       'title' =>mysqli_real_escape_string($conn, $_POST['title']),
       'content' =>mysqli_real_escape_string($conn, $_POST['contents']),
       'category' =>mysqli_real_escape_string($conn, $_POST['category']),
       'usernum' =>mysqli_real_escape_string($conn, $_POST['user']),
       'position' =>mysqli_real_escape_string($conn, $_POST['position']),
+      'user_idx' =>mysqli_real_escape_string($conn, $_POST['user_idx'])
     );
   
     $sql = "
@@ -70,19 +72,60 @@ if($result === false){
 
   $result = mysqli_query($conn, $sql);
   if($result === false){
-    ?><script>alert('ERROR');
-    window.location.href="position_board.php?position=<?=$_POST['position']?>";</script>
+    ?><script>alert('저장과정중 문제가 생겼습니다');
+    window.location.href="/firstapp/create_board/create_position.php";</script>
    <?php
     
   } else {
+    if($_POST['position'] == "top"){
       ?>
       <script type="text/Javascript">
-        alert('OK');
-        window.location.href="position_board.php?position=<?=$_POST['position']?>";
+        alert('게시되었습니다');
+        window.location.href="/firstapp/board/position_board_top.php";
       </script>
   <?php
+    }
+    else if($_POST['position'] == "jg"){
+      ?>
+      <script type="text/Javascript">
+        alert('게시되었습니다');
+        window.location.href="/firstapp/board/position_board_jg.php";
+      </script>
+  <?php
+    }
+    else if($_POST['position'] == "mid"){
+      ?>
+      <script type="text/Javascript">
+        alert('게시되었습니다');
+        window.location.href="/firstapp/board/position_board_mid.php";
+      </script>
+  <?php
+    }
+    else if($_POST['position'] == "ad"){
+      ?>
+      <script type="text/Javascript">
+        alert('게시되었습니다');
+        window.location.href="/firstapp/board/position_board_ad.php";
+      </script>
+  <?php
+    }
+    else if($_POST['position'] == "sup"){
+      ?>
+      <script type="text/Javascript">
+        alert('게시되었습니다');
+        window.location.href="/firstapp/board/position_board_sup.php";
+      </script>
+  <?php
+    }
+    else{
+      ?>
+      <script type="text/Javascript">
+        alert('error');
+        window.location.href="/firstapp/main.php";
+      </script>
+  <?php
+    }
      exit;
-
 }
 }
 ?>
